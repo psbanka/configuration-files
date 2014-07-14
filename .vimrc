@@ -13,11 +13,14 @@ set smartcase
 
 hi Search ctermbg=7
 
+" Syntastic
 call pathogen#infect() 
 set statusline+=%{SyntasticStatuslineFlag()}
+let g:syntastic_javascript_checkers=["eslint"]
+let g:syntastic_python_checkers=["flake8"]
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+match OverLength /\%121v.\+/
 
 " remap 'page down" to the space key
 nnoremap <SPACE> <PAGEDOWN>
