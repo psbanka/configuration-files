@@ -4,8 +4,28 @@ Just a set of files (mostly `.vimrc`) that are useful to keep synced
 
 ## How to set up VIM on a new machine
 
-### Step-1
+### Prepare platform
 
+#### On mac:
+
+```
+brew install cmake
+```
+
+#### On ubuntu:
+
+```
+sudo apt-get install cmake
+```
+
+### Install
+
+#### Grab the file
+```
+curl https://raw.githubusercontent.com/psbanka/configuration-files/master/.vimrc > ~/.vimrc
+```
+
+#### Set up Vundle
 
 ```
 cd ~;mkdir -p .vim/bundle;git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -15,24 +35,13 @@ Run `vim`. You'll see some errors. Ignore them. Once started, run `:PluginInstal
 
 This will error. Ignore it. Exit `vim`.
 
-### Step-2
-
-#### On mac:
+#### Compile YouCompleteMe
 
 ```
-brew install cmake
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
 ```
 
-#### On ubuntu:
-
-```
-sudo apt-get install cmake
-cd ~/.vim/bundle/YouCompleteMe
-./install.sh --clang-completer
-```
-
-### Step-3
+### Test
 
 run `vim` again. Profit!
