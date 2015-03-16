@@ -6,6 +6,8 @@ Just a set of files (mostly `.vimrc`) that are useful to keep synced
 
 ### Prepare platform
 
+We assume you have `node` installed. If not, go download `nvm` and come back here when done.
+
 #### On mac:
 
 ```
@@ -40,6 +42,12 @@ This will error. Ignore it. Exit `vim`.
 ```
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
+```
+
+#### Install node modules for tern
+```
+cd ~/.vim/bundle/tern_for_vim/
+npm install
 ```
 
 ### Test
