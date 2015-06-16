@@ -33,9 +33,11 @@ curl https://raw.githubusercontent.com/psbanka/configuration-files/master/.vimrc
 cd ~;mkdir -p .vim/bundle;git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
-Run `vim`. You'll see some errors. Ignore them. Once started, run `:PluginInstall`
+- Run `vim`. You'll see some errors. Ignore them. 
 
-This will error. Ignore it. Exit `vim`.
+- Inside vim, run `:PluginInstall`
+
+- This will error. Ignore it. Exit `vim`.
 
 #### Compile YouCompleteMe
 
