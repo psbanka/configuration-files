@@ -17,7 +17,7 @@ brew install cmake
 #### On ubuntu:
 
 ```
-sudo apt-get install cmake
+sudo apt-get install cmake python-dev
 ```
 
 ### Install
@@ -43,6 +43,7 @@ cd ~;mkdir -p .vim/bundle;git clone https://github.com/gmarik/Vundle.vim.git ~/.
 
 ```
 cd ~/.vim/bundle/YouCompleteMe
+git submodule update --init --recursive
 ./install.sh --clang-completer
 ```
 
