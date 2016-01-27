@@ -17,11 +17,10 @@ set ruler
 set showcmd
 set et
 set t_Co=256
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 " set bg=dark
 set smartcase
-set autochdir
 " set clipboard=unnamed
 
 hi Search ctermbg=7
@@ -40,6 +39,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'suan/vim-instant-markdown'
 Bundle 'tpope/vim-surround'
+Bundle 'elzr/vim-json'
 Bundle 'chriskempson/base16-vim'
 " Track the engine.
 Plugin 'SirVer/ultisnips'
@@ -49,12 +49,11 @@ Plugin 'honza/vim-snippets'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
-Bundle 'kien/ctrlp.vim'
 Bundle 'rking/ag.vim'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mxw/vim-jsx'
-Plugin 'facebook/vim-flow'
+" Plugin 'facebook/vim-flow'
 Plugin 'tmhedberg/matchit'
 
 call vundle#end()            " required
@@ -80,65 +79,27 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
 
-"""""""""""""""
-"  syntastic  "
-"""""""""""""""
-
-set statusline+=%{SyntasticStatuslineFlag()}
-let g:syntastic_javascript_checkers=["eslint"]
-" let g:syntastic_javascript_checkers = ['jsxhint']
-let g:syntastic_python_checkers=["flake8"]
-let eslint_rules_dir=$ESLINT_RULES_DIR
-if eslint_rules_dir != ""
-    execute "let g:syntastic_javascript_eslint_args=' --rulesdir ".eslint_rules_dir."'"
-endif
-
-"""""""""""
-"  ctrlp  "
-"""""""""""
-
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|build$\|bower_components$\|dist$\|node_modules$',
-  \ 'file': '\.tmpl.js$\|\.so$\|\.style.css$'
-  \ }
-
-
 """""""""""""
 "  airline  "
 """""""""""""
 
 let g:airline_theme = 'wombat'
-let g:airline_enable_branch = 1
-let g:airline_enable_syntastic = 1
+" let g:airline_enable_branch = 1
+let g:airline#extensions#branch#enabled = 1
+" let g:airline_enable_syntastic = 1
+let g:airline#extensions#syntastic#enabled = 1
 set laststatus=2
 " powerline symbols
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_branch_prefix = ''
-let g:airline_readonly_symbol = ''
-let g:airline_linecolumn_prefix = ''
-
-
-
-"""""""""""""""
-"  Powerline  "
-"""""""""""""""
-" set guifont=Anonymous\ Pro\ for\ Powerline:h15
-" let g:Powerline_symbols = 'fancy'
-" set encoding=utf-8
-" set t_Co=256
-" set fillchars+=stl:\ ,stlnc:\
-" set term=xterm-256color
-" set termencoding=utf-8
-" set laststatus=2
-" let g:Powerline_mode_V="V·LINE"
-" let g:Powerline_mode_cv="V·BLOCK"
-" let g:Powerline_mode_S="S·LINE"
-" let g:Powerline_mode_cs="S·BLOCK"
-" let g:miniBufExplForceSyntaxEnable = 1
-" set noshowmode " powerline gives the mode
+" let g:airline_branch_prefix = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_readonly_symbol = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_linecolumn_prefix = ''
+" let g:airline_symbols.linenr = ''
 
 """""""""""""""""
 "  colorscheme  "
@@ -150,6 +111,11 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%121v.\+/
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost *.tsx set filetype=typescript
+
+" Strip trailing whitespace on save for some filetypes
+autocmd FileType c,cpp,python,javascript,typescript,htmldjango,less,scss,css,make,json,jade
+ \ autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " remap 'page down" to the space key
 nnoremap <SPACE> <PAGEDOWN>
@@ -167,3 +133,26 @@ nnoremap <C-h> :tabprev<CR>
 " nnoremap <silent> <C-p> :tabprevious<CR>
 
 set noai
+"
+""""""""""""""""""""""
+"  syntastic / flow  "
+""""""""""""""""""""""
+let g:syntastic_aggregate_errors = 1
+let frost_proj_root=$FROST_PROJECT_ROOT
+if frost_proj_root != ""
+    let g:syntastic_typescript_checkers = ['tsc', 'tslint']
+    execute "let g:syntastic_typescript_tsc_args='--jsx react --moduleResolution node -t es6 --noEmit ".frost_proj_root."/typings/tsd.d.ts'"
+endif
+
+let g:flow#enable = 0 " doesn't seem to work.
+let g:flow#errjmp = 0
+
+set statusline+=%{SyntasticStatuslineFlag()}
+"let g:syntastic_javascript_checkers=["flow"]
+let g:syntastic_javascript_checkers=["eslint"]
+let g:syntastic_python_checkers=["flake8"]
+let eslint_rules_dir=$ESLINT_RULES_DIR
+if eslint_rules_dir != ""
+    execute "let g:syntastic_javascript_eslint_args=' --rulesdir ".eslint_rules_dir."'"
+endif
+
